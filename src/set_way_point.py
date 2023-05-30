@@ -7,6 +7,7 @@ from turtlesim.msg import Pose
 from std_msgs.msg import Bool
 from rospy.exceptions import ROSInterruptException
 from turtle_regulation_FyFalina_Gokhool.srv import waypoint as wp
+from turtle_regulation_FyFalina_Gokhool.srv import waypointRequest as wpRequest
 
 def set_way_point():
         global turtlePose, waypoint
@@ -83,6 +84,42 @@ def set_waypoint_service(req):
        res.data = True
 
        return res
+       
+ def service_client(x,y):
+       # Créer le client pour le service
+       rospy.wait_for_service("set_waypoint_service")
+       try:
+          set_waypoint_client = rospy.ServiceProxy("set_waypoint_service", wp)
+
+          # Vérifier si la tortue est en mouvement
+          is_moving = False
+          while not rospy.is_shutdown() and not is_moving:
+              # Votre condition pour vérifier si la tortue est en mouvement
+              is_moving = True  # Mettez votre condition ici
+              rospy.sleep(1)
+
+          # Effectuer les appels au service
+          if not is_moving:
+              # Premier appel au service
+              req1 = wpRequest()
+              req1.x.data = 10
+              req1.y.data = 10
+              set_waypoint_client(req1)
+
+              # Deuxième appel au service
+              req2 = wpRequest()
+              req2.x.data = 5
+              req2.y.data = 5
+              set_waypoint_client(req2)
+
+              # Troisième appel au service
+              req3 = wpRequest()
+              req3.x.data = 3
+              req3.y.data = 3
+              set_waypoint_client(req3)
+
+       except rospy.ServiceException as e:
+         print("Service call failed:", str(e))
 
 
 if __name__=="__main__":
