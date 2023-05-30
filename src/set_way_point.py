@@ -6,11 +6,14 @@ import math
 from turtlesim.msg import Pose
 from std_msgs.msg import Bool
 from rospy.exceptions import ROSInterruptException
+from turtle_regulation_FyFalina_Gokhool.srv import waypoint as wp
 
 def set_way_point():
-        global turtlePose
+        global turtlePose, waypoint
         turtlePose = None
         rospy.init_node("set_way_point")
+        #création du service
+        rospy.Service("set_waypoint_service",wp, set_waypoint_service)
         #souscrire au topic "pose" et met à jour la pose
         #de la tortue avec getPose
         rospy.Subscriber("pose",Pose, getPose)
@@ -43,7 +46,6 @@ def set_way_point():
 
                     #Calcule distance euclidienne
                     d_e = math.sqrt(((waypoint.y - turtlePose.y)**2) + ((waypoint.x - turtlePose.x)**2))
-
                     #l'erreur linéaire el est la distance entre la tortue et le>
                     el = d_e
 
@@ -69,6 +71,19 @@ def set_way_point():
 def getPose(pose):
         global turtlePose
         turtlePose=pose
+
+def set_waypoint_service(req):
+       global waypoint
+       #mettre à jour la valeur de waypoint
+       waypoint.x = req.x.data
+       waypoint.y = req.y.data
+
+       #réponse du service
+       res = Bool()
+       res.data = True
+
+       return res
+
 
 if __name__=="__main__":
         try:
