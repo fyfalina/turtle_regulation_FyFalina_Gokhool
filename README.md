@@ -33,4 +33,4 @@ Dans un troisieme terminal
 source ~/[Votre_nom]_ws/devel/setup.bash
 rosrun turtle_regulation_FyFalina_Gokhool set_way_point.py /cmd_vel:=/turtle1/cmd_vel /pose:=/turtle1/pose _kp:=[Valeur Constante]
 ```
-En fonction de la valeur de kp, la tortue se dirigera vers la direction x, y a une vitesse constante. Pour des kp forts, la tortue pivotera rapidement. Pour des kp faibles, la tortue pivotera lentemant. Les kp ne doivent pas etre ni trop fort ni trop faibles.
+En fonction de la valeur de kp, la tortue se tournera vers le waypoint a une vitesse constante. Pour des kp forts, la tortue pivotera rapidement. Pour des kp faibles, la tortue pivotera lentemant. Les kp ne doivent pas etre ni trop fort ni trop faibles.
