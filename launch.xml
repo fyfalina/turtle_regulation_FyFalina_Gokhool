@@ -1,0 +1,10 @@
+<launch>
+	<param name="/Kp" type="float" value="5" />
+	<param name="/Kpl" type="float" value="2" />
+	<param name="/distance_tolerane" type="float" value="4" />
+
+	<node pkg='turtle_regulation_FyFalina_Gokhool' name='setway' type='set_waypoint.py' />
+		<remap from='cmd_vel' to='turtle1/cmd_vel'/>
+		<remap from='pose' to='turtle1/pose'/>
+	</node>
+</launch>
